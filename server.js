@@ -9,6 +9,12 @@ app.use(express.json());
 const HF_API_KEY = process.env.HF_API_KEY;
 const MODEL_URL = "https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta";
 
+// Home route (fixes Cannot GET /)
+app.get("/", (req, res) => {
+  res.send("Sipra Backend is Running 🚀");
+});
+
+// Chat route
 app.post("/chat", async (req, res) => {
   const userMessage = req.body.message;
 
@@ -40,6 +46,9 @@ Sipra:`
   }
 });
 
-app.listen(3000, () => {
-  console.log("Sipra backend running on port 3000");
+// Render dynamic port support
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log("Sipra backend running on port " + PORT);
 });
